@@ -15,7 +15,7 @@ import type { Transaction } from '../types';
 export const Dashboard: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
-  
+
   const { role, theme } = useAppSelector((state) => state.ui);
   const dispatch = useAppDispatch();
 
@@ -31,7 +31,6 @@ export const Dashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Top Navbar */}
       <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4 py-3 min-h-[64px] flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-2">
@@ -40,20 +39,20 @@ export const Dashboard: React.FC = () => {
             </div>
             <h1 className="text-base sm:text-lg font-bold tracking-tight">FinDash</h1>
           </div>
-          
+
           <div className="flex items-center gap-2 sm:gap-4">
             <div className="flex items-center gap-1 sm:gap-2 bg-secondary rounded-lg p-1">
-              <Button 
-                variant="ghost" 
-                size="sm" 
+              <Button
+                variant="ghost"
+                size="sm"
                 className={`h-8 px-2 sm:px-3 text-xs sm:text-sm ${role === 'viewer' ? 'bg-background shadow-sm' : ''}`}
                 onClick={() => dispatch(setRole('viewer'))}
               >
                 Viewer
               </Button>
-              <Button 
-                variant="ghost" 
-                size="sm" 
+              <Button
+                variant="ghost"
+                size="sm"
                 className={`h-8 px-2 sm:px-3 text-xs sm:text-sm gap-1 sm:gap-1.5 ${role === 'admin' ? 'bg-background shadow-sm text-primary' : ''}`}
                 onClick={() => dispatch(setRole('admin'))}
               >
@@ -61,8 +60,8 @@ export const Dashboard: React.FC = () => {
                 Admin
               </Button>
             </div>
-            
-            <button 
+
+            <button
               onClick={() => dispatch(toggleTheme())}
               className="p-2 rounded-full hover:bg-secondary transition-colors"
               title="Toggle Theme"
@@ -74,26 +73,30 @@ export const Dashboard: React.FC = () => {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 container mx-auto px-4 py-8 space-y-8">
+      <main className="flex-1 container mx-auto px-4 py-8 space-y-8 overflow-hidden sm:overflow-visible">
         
-        <section>
+        <section className="w-full">
           <SummaryCards />
         </section>
 
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <BalanceTrendChart />
-          <CategoryPieChart />
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          <div className="md:col-span-2 min-w-0">
+            <BalanceTrendChart />
+          </div>
+          <div className="min-w-0">
+            <CategoryPieChart />
+          </div>
         </section>
 
-        <section className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 bg-card rounded-xl border border-border p-6 shadow-sm">
-            <div className="flex items-center justify-between mb-6">
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="lg:col-span-2 bg-card rounded-xl border border-border p-4 sm:p-6 shadow-sm min-w-0 overflow-hidden">
+            <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
               <div>
-                <h2 className="text-lg font-semibold">Transactions</h2>
-                <p className="text-sm text-muted-foreground mt-1">Manage your incoming and outgoing funds.</p>
+                <h2 className="text-base sm:text-lg font-semibold">Transactions</h2>
+                <p className="text-xs sm:text-sm text-muted-foreground mt-1">Manage your incoming and outgoing funds.</p>
               </div>
               {role === 'admin' && (
-                <Button onClick={handleAddNew} className="gap-2">
+                <Button onClick={handleAddNew} className="gap-2 shrink-0">
                   <Plus className="w-4 h-4" />
                   Add New
                 </Button>
@@ -103,17 +106,17 @@ export const Dashboard: React.FC = () => {
             <TransactionList onEdit={handleEdit} />
           </div>
           
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 min-w-0">
             <InsightsPanel />
           </div>
         </section>
 
       </main>
 
-      <TransactionModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-        transactionToEdit={editingTransaction} 
+      <TransactionModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        transactionToEdit={editingTransaction}
       />
     </div>
   );
