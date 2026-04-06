@@ -33,20 +33,20 @@ export const Dashboard: React.FC = () => {
     <div className="min-h-screen bg-background flex flex-col">
       {/* Top Navbar */}
       <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+        <div className="container mx-auto px-4 py-3 min-h-[64px] flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <div className="bg-primary/10 p-2 rounded-lg">
               <LayoutDashboard className="w-5 h-5 text-primary" />
             </div>
-            <h1 className="text-lg font-bold tracking-tight">FinDash</h1>
+            <h1 className="text-base sm:text-lg font-bold tracking-tight">FinDash</h1>
           </div>
           
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 bg-secondary rounded-lg p-1">
+          <div className="flex items-center gap-2 sm:gap-4">
+            <div className="flex items-center gap-1 sm:gap-2 bg-secondary rounded-lg p-1">
               <Button 
                 variant="ghost" 
                 size="sm" 
-                className={`h-8 ${role === 'viewer' ? 'bg-background shadow-sm' : ''}`}
+                className={`h-8 px-2 sm:px-3 text-xs sm:text-sm ${role === 'viewer' ? 'bg-background shadow-sm' : ''}`}
                 onClick={() => dispatch(setRole('viewer'))}
               >
                 Viewer
@@ -54,7 +54,7 @@ export const Dashboard: React.FC = () => {
               <Button 
                 variant="ghost" 
                 size="sm" 
-                className={`h-8 gap-1.5 ${role === 'admin' ? 'bg-background shadow-sm text-primary' : ''}`}
+                className={`h-8 px-2 sm:px-3 text-xs sm:text-sm gap-1 sm:gap-1.5 ${role === 'admin' ? 'bg-background shadow-sm text-primary' : ''}`}
                 onClick={() => dispatch(setRole('admin'))}
               >
                 <Shield className="w-3.5 h-3.5" />
@@ -67,7 +67,7 @@ export const Dashboard: React.FC = () => {
               className="p-2 rounded-full hover:bg-secondary transition-colors"
               title="Toggle Theme"
             >
-              {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              {theme === 'dark' ? <Sun className="w-4 h-4 sm:w-5 sm:h-5" /> : <Moon className="w-4 h-4 sm:w-5 sm:h-5" />}
             </button>
           </div>
         </div>

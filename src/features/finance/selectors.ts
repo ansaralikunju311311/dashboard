@@ -12,7 +12,20 @@ export const selectFilteredTransactions = createSelector(
                             t.description.toLowerCase().includes(filters.search.toLowerCase());
       const matchesType = filters.type === 'all' || t.type === filters.type;
       return matchesSearch && matchesType;
-    }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    }).sort((a, b) => {
+      switch (filters.sortBy) {
+        case 'date-desc':
+          return new Date(b.date).getTime() - new Date(a.date).getTime();
+        case 'date-asc':
+          return new Date(a.date).getTime() - new Date(b.date).getTime();
+        case 'amount-desc':
+          return b.amount - a.amount;
+        case 'amount-asc':
+          return a.amount - b.amount;
+        default:
+          return new Date(b.date).getTime() - new Date(a.date).getTime();
+      }
+    });
   }
 );
 

@@ -2,7 +2,6 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { Transaction } from '../../types';
 import { INITIAL_TRANSACTIONS } from '../../data/mockData';
 
-// Persist and load from local storage
 const loadState = (): Transaction[] => {
   try {
     const serializedState = localStorage.getItem('transactions');
@@ -29,6 +28,7 @@ interface FinanceState {
   filters: {
     search: string;
     type: 'all' | 'income' | 'expense';
+    sortBy: 'date-desc' | 'date-asc' | 'amount-desc' | 'amount-asc';
   };
 }
 
@@ -37,6 +37,7 @@ const initialState: FinanceState = {
   filters: {
     search: '',
     type: 'all',
+    sortBy: 'date-desc',
   },
 };
 
@@ -65,8 +66,11 @@ const financeSlice = createSlice({
     setTypeFilter: (state, action: PayloadAction<'all' | 'income' | 'expense'>) => {
       state.filters.type = action.payload;
     },
+    setSortFilter: (state, action: PayloadAction<'date-desc' | 'date-asc' | 'amount-desc' | 'amount-asc'>) => {
+      state.filters.sortBy = action.payload;
+    },
   },
 });
 
-export const { addTransaction, updateTransaction, deleteTransaction, setSearchFilter, setTypeFilter } = financeSlice.actions;
+export const { addTransaction, updateTransaction, deleteTransaction, setSearchFilter, setTypeFilter, setSortFilter } = financeSlice.actions;
 export default financeSlice.reducer;

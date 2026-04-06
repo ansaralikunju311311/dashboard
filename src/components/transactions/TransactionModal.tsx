@@ -67,92 +67,94 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onCl
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-      <div className="bg-card w-full max-w-md rounded-xl border border-border shadow-lg">
-        <div className="flex items-center justify-between p-6 border-b border-border">
+      <div className="bg-card w-full max-w-md rounded-xl border border-border shadow-lg max-h-[90vh] flex flex-col">
+        <div className="flex items-center justify-between p-6 border-b border-border shrink-0">
           <h2 className="text-lg font-semibold">{transactionToEdit ? 'Edit Transaction' : 'Add Transaction'}</h2>
           <button onClick={onClose} className="p-1 rounded-md text-muted-foreground hover:bg-muted transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
         
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">Type</label>
-            <div className="flex gap-2">
-              <label className="flex items-center gap-2">
-                <input
-                  type="radio"
-                  name="type"
-                  value="expense"
-                  checked={formData.type === 'expense'}
-                  onChange={() => setFormData({ ...formData, type: 'expense' })}
-                  className="accent-primary"
-                />
-                Expense
-              </label>
-              <label className="flex items-center gap-2">
-                <input
-                  type="radio"
-                  name="type"
-                  value="income"
-                  checked={formData.type === 'income'}
-                  onChange={() => setFormData({ ...formData, type: 'income' })}
-                  className="accent-primary"
-                />
-                Income
-              </label>
+        <div className="overflow-y-auto p-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">Type</label>
+              <div className="flex gap-2">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name="type"
+                    value="expense"
+                    checked={formData.type === 'expense'}
+                    onChange={() => setFormData({ ...formData, type: 'expense' })}
+                    className="accent-primary"
+                  />
+                  Expense
+                </label>
+                <label className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name="type"
+                    value="income"
+                    checked={formData.type === 'income'}
+                    onChange={() => setFormData({ ...formData, type: 'income' })}
+                    className="accent-primary"
+                  />
+                  Income
+                </label>
+              </div>
             </div>
-          </div>
 
-          <div className="space-y-1">
-            <label className="block text-sm font-medium">Description</label>
-            <Input
-              required
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              placeholder="e.g., Groceries"
-            />
-          </div>
-
-          <div className="space-y-1">
-            <label className="block text-sm font-medium">Amount</label>
-            <Input
-              required
-              type="number"
-              step="0.01"
-              min="0"
-              value={formData.amount}
-              onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
-              placeholder="0.00"
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="block text-sm font-medium">Category</label>
+              <label className="block text-sm font-medium">Description</label>
               <Input
                 required
-                value={formData.category}
-                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                placeholder="e.g., Food"
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                placeholder="e.g., Groceries"
               />
             </div>
+
             <div className="space-y-1">
-              <label className="block text-sm font-medium">Date</label>
+              <label className="block text-sm font-medium">Amount</label>
               <Input
                 required
-                type="date"
-                value={formData.date}
-                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                type="number"
+                step="0.01"
+                min="0"
+                value={formData.amount}
+                onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
+                placeholder="0.00"
               />
             </div>
-          </div>
 
-          <div className="pt-4 flex justify-end gap-2">
-            <Button type="button" variant="ghost" onClick={onClose}>Cancel</Button>
-            <Button type="submit">Save Transaction</Button>
-          </div>
-        </form>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <label className="block text-sm font-medium">Category</label>
+                <Input
+                  required
+                  value={formData.category}
+                  onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                  placeholder="e.g., Food"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="block text-sm font-medium">Date</label>
+                <Input
+                  required
+                  type="date"
+                  value={formData.date}
+                  onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                />
+              </div>
+            </div>
+
+            <div className="pt-4 flex justify-end gap-2">
+              <Button type="button" variant="ghost" onClick={onClose}>Cancel</Button>
+              <Button type="submit">Save Transaction</Button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
